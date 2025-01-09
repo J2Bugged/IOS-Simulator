@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iOS Simulator Download</title>
+    <style>
+        body {
+            font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(145deg, #000000, #1a1a1a);
+            color: white;
+        }
+        .container {
+            text-align: center;
+            padding: 2rem;
+        }
+        .download-btn {
+            display: inline-block;
+            background: #007AFF;
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .download-btn:hover {
+            transform: scale(1.05);
+            background: #0066CC;
+        }
+        #downloadStatus {
+            color: #666;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        .progress-bar {
+            width: 300px;
+            height: 4px;
+            background: #333;
+            border-radius: 2px;
+            margin: 10px auto;
+            display: none;
+        }
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: #007AFF;
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>iOS Simulator for Windows</h1>
+        <p>Experience iOS on your Windows PC</p>
+        <button onclick="startDownload()" class="download-btn">
+            Download for Windows
+        </button>
+        <div class="progress-bar" id="progressBar">
+            <div class="progress" id="progress"></div>
+        </div>
+        <p id="downloadStatus"></p>
+        <p style="color: #666; margin-top: 20px;">Version 1.0.0</p>
+    </div>
+
+    <script>
+        function startDownload() {
+            const downloadUrl = 'https://github.com/J2Bugged/ios-simulator/releases/download/v1.0.0/iOS-Simulator-Setup.exe';
+            const fileName = 'iOS-Simulator-Setup.exe';
+            const status = document.getElementById('downloadStatus');
+            const progressBar = document.getElementById('progressBar');
+            const progress = document.getElementById('progress');
+
+            // Show progress bar
+            progressBar.style.display = 'block';
+            status.textContent = 'Starting download...';
+
+            // Create a hidden download link
+            const link = document.createElement('a');
+            link.href = downloadUrl;
+            link.download = fileName;
+            link.setAttribute('download', ''); // Force download
+            document.body.appendChild(link);
+
+            // Simulate progress (since we can't track actual download progress for security reasons)
+            let width = 0;
+            const interval = setInterval(() => {
+                if (width >= 100) {
+                    clearInterval(interval);
+                    status.textContent = 'Download complete! Check your downloads folder.';
+                } else {
+                    width++;
+                    progress.style.width = width + '%';
+                    if (width < 90) {
+                        status.textContent = 'Downloading... ' + width + '%';
+                    }
+                }
+            }, 50);
+
+            // Trigger download
+            link.click();
+
+            // Cleanup
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html> 
